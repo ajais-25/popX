@@ -1,27 +1,32 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import InputField from "../components/InputField";
 
 const SignupForm = () => {
-  const [formData, setFormData] = useState({
-    fullName: "Mary Doe",
-    phone: "Mary Doe",
-    email: "Mary Doe",
-    password: "Mary Doe",
-    company: "Mary Doe",
-    isAgency: "yes",
-  });
+  const [fullName, setFullName] = useState("Marry Doe");
+  const [phone, setPhone] = useState("Marry Doe");
+  const [email, setEmail] = useState("Marry Doe");
+  const [password, setPassword] = useState("Marry Doe");
+  const [company, setCompany] = useState("Marry Doe");
+  const [isAgency, setIsAgency] = useState("yes");
 
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
-    // Submit logic here
+
+    const formData = {
+      fullName,
+      phone,
+      email,
+      password,
+      company,
+      isAgency,
+    };
+
+    console.log("Form submitted:", formData);
+
+    navigate("/profile");
   };
 
   return (
@@ -34,103 +39,55 @@ const SignupForm = () => {
           Create your <br /> PopX account
         </h1>
 
-        <div className="flex flex-col relative mb-6">
-          <label
-            htmlFor="fullName"
-            className="absolute bg-white font-semibold text-md text-violet-600 p-1 -top-4 left-3"
-          >
-            Full Name
-            <span className="text-red-600">*</span>
-          </label>
-          <input
-            type="text"
-            name="fullName"
-            id="fullName"
-            className="px-4 py-3 outline-none  border border-gray-300 rounded-lg transition-all duration-300"
-            placeholder="Enter full name"
-            value={formData.fullName}
-            onChange={handleChange}
-            required
-          />
-        </div>
+        <InputField
+          type="text"
+          name="fullName"
+          label="Full Name"
+          placeholder="Enter full name"
+          state={fullName}
+          setState={setFullName}
+          isRequired={true}
+        />
 
-        <div className="flex flex-col relative mb-6">
-          <label
-            htmlFor="phone"
-            className="absolute bg-white font-semibold text-md text-violet-600 p-1 -top-4 left-3"
-          >
-            Phone Number
-            <span className="text-red-600">*</span>
-          </label>
-          <input
-            type="tel"
-            name="phone"
-            id="phone"
-            className="px-4 py-3 outline-none  border border-gray-300 rounded-lg transition-all duration-300"
-            placeholder="Enter phone number"
-            value={formData.phone}
-            onChange={handleChange}
-            required
-          />
-        </div>
+        <InputField
+          type="tel"
+          name="phone"
+          label="Phone Number"
+          placeholder="Enter phone number"
+          state={phone}
+          setState={setPhone}
+          isRequired={true}
+        />
 
-        <div className="flex flex-col relative mb-6">
-          <label
-            htmlFor="email"
-            className="absolute bg-white font-semibold text-md text-violet-600 p-1 -top-4 left-3"
-          >
-            Email address
-            <span className="text-red-600">*</span>
-          </label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            className="px-4 py-3 outline-none  border border-gray-300 rounded-lg transition-all duration-300"
-            placeholder="Enter email address"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
+        <InputField
+          type="text"
+          name="email"
+          label="Email Address"
+          placeholder="Enter email address"
+          state={email}
+          setState={setEmail}
+          isRequired={true}
+        />
 
-        <div className="flex flex-col relative mb-6">
-          <label
-            htmlFor="password"
-            className="absolute bg-white font-semibold text-md text-violet-600 p-1 -top-4 left-3"
-          >
-            Password
-            <span className="text-red-600">*</span>
-          </label>
-          <input
-            type="text"
-            name="password"
-            id="password"
-            className="px-4 py-3 outline-none  border border-gray-300 rounded-lg transition-all duration-300"
-            placeholder="Enter password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
+        <InputField
+          type="text"
+          name="password"
+          label="Password"
+          placeholder="Enter password"
+          state={password}
+          setState={setPassword}
+          isRequired={true}
+        />
 
-        <div className="flex flex-col relative mb-6">
-          <label
-            htmlFor="company"
-            className="absolute bg-white font-semibold text-md text-violet-600 p-1 -top-4 left-3"
-          >
-            Company Name
-          </label>
-          <input
-            type="text"
-            name="company"
-            id="company"
-            className="px-4 py-3 outline-none  border border-gray-300 rounded-lg transition-all duration-300"
-            placeholder="Enter company name (optional)"
-            value={formData.company}
-            onChange={handleChange}
-          />
-        </div>
+        <InputField
+          type="text"
+          name="company"
+          label="Company Name"
+          placeholder="Enter company name"
+          state={company}
+          setState={setCompany}
+          isRequired={false}
+        />
 
         <p className="text-sm font-medium text-black mb-2">
           Are you an Agency?
@@ -142,8 +99,8 @@ const SignupForm = () => {
               type="radio"
               name="isAgency"
               value="yes"
-              checked={formData.isAgency === "yes"}
-              onChange={handleChange}
+              checked={isAgency === "yes"}
+              onChange={(e) => setIsAgency(e.target.value)}
               className="size-5 accent-[#6c25ff]"
             />
             <span>Yes</span>
@@ -153,8 +110,8 @@ const SignupForm = () => {
               type="radio"
               name="isAgency"
               value="no"
-              checked={formData.isAgency === "no"}
-              onChange={handleChange}
+              checked={isAgency === "no"}
+              onChange={(e) => setIsAgency(e.target.value)}
               className="size-5 accent-[#6c25ff]"
             />
             <span>No</span>
@@ -164,7 +121,6 @@ const SignupForm = () => {
         <button
           type="submit"
           className="w-full bg-[#6C25FF] text-white py-2 rounded font-medium cursor-pointer hover:bg-purple-700 transition"
-          onClick={() => navigate("/profile")}
         >
           Create Account
         </button>

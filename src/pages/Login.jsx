@@ -1,11 +1,25 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import InputField from "../components/InputField";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const formData = {
+      email,
+      password,
+    };
+
+    console.log("Form submitted:", formData);
+
+    navigate("/profile");
+  };
 
   return (
     <div className="h-screen flex items-center justify-center bg-[#F7F8F9]">
@@ -23,42 +37,28 @@ const LoginPage = () => {
           </p>
         </div>
         <form className="space-y-4">
-          <div className="flex flex-col relative mb-6">
-            <label
-              htmlFor="email"
-              className="absolute bg-white font-semibold text-md text-violet-600 p-1 -top-4 left-3"
-            >
-              Email address
-            </label>
-            <input
-              type="email"
-              id="email"
-              className="px-4 py-3 outline-none  border border-gray-300 rounded-lg transition-all duration-300"
-              placeholder="Enter email address"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div className="flex flex-col relative mb-6">
-            <label
-              htmlFor="password"
-              className="absolute bg-white font-semibold text-md text-violet-600 p-1 -top-4 left-3"
-            >
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              className="px-4 py-3 outline-none  border border-gray-300 rounded-lg transition-all duration-300"
-              placeholder="Enter password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
+          <InputField
+            type="email"
+            name="email"
+            label="Email"
+            placeholder="Enter email"
+            state={email}
+            setState={setEmail}
+            isRequired={false}
+          />
+          <InputField
+            type="password"
+            name="password"
+            label="Password"
+            placeholder="Enter password"
+            state={password}
+            setState={setPassword}
+            isRequired={false}
+          />
           <button
             type="submit"
             className="w-full py-2 px-4 bg-[#CBCBCB] text-white font-semibold rounded-md cursor-pointer hover:bg-gray-400"
-            onClick={() => navigate("/profile")}
+            onClick={handleSubmit}
           >
             Login
           </button>

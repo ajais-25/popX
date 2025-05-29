@@ -40,8 +40,8 @@ const Profile = () => {
               </button>
             </div>
             <div className="mx-5">
-              <p className="font-medium">Mary Doe</p>
-              <p className="text-sm">Marry@gmail.com</p>
+              <p className="font-medium">Marry Doe</p>
+              <p className="text-sm">Marry@Gmail.Com</p>
             </div>
           </div>
           <div className="px-5">
